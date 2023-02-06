@@ -1,5 +1,5 @@
 import './App.css';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import video from './food.mp4'
 import ListOfRecipes from './ListOfRecipes';
 
@@ -12,20 +12,21 @@ function App() {
   const [myRecipes, setMyRecipes]= useState([])
   const [word, setWord] = useState('fish')
 
-  useEffect(()  => {
-   recipesAPI()
-  },[word])
+ 
 
-  const recipesAPI = async() =>{ 
+  const recipesAPI = useCallback(async()=>{ 
     const response = await fetch(`https://api.edamam.com/api/recipes/v2?type=public&q=${word}&app_id=${API_ID}&app_key=${API_KEY}`)
     const data = await response.json()
     setMyRecipes(data.hits);
-  }
+  },[word])
+
+  useEffect(() => {
+    recipesAPI()
+   },[recipesAPI])
 
   const searchRecipes= (e) =>{
     setMySerch(e.target.value)
   }
-
   const stopSearch = (e) =>{
     e.preventDefault()
     setWord(mySerch)
@@ -42,16 +43,17 @@ function App() {
   <div className="container">
     <form onSubmit={stopSearch}>
       <input className='search' placeholder='search...' onChange={searchRecipes} value={mySerch}></input>
-    </form>
-    </div>
-  <div className="container">
+      <div className="container">
   <button>
       <img src='https://img.icons8.com/fluency/48/000000/fry.png' alt='search'/>
     </button>
   </div>
+    </form>
+    </div>
+  
 <div>
-  {myRecipes.map(element =>(
-    <ListOfRecipes
+  {myRecipes.map((element, item) =>(
+    <ListOfRecipes key={item}
      label={element.recipe.label}
      image={element.recipe.image}
      calories={element.recipe.calories}

@@ -9,8 +9,8 @@ return(
         </div>
         
         <ul className='list'>
-            {ingredient.map(item =>(
-                <li><img className="icon" src='https://img.icons8.com/fluency/512/checked-radio-button.png' alt='icon'/>{item}</li>
+            {ingredient.map((item, i) =>(
+                <li key={i}><img className="icon" src='https://img.icons8.com/fluency/512/checked-radio-button.png' alt='icon'/>{item}</li>
             ))
             }
         </ul>

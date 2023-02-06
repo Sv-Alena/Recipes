@@ -51,13 +51,14 @@ li {
   margin: .5em 0 .5em 2.5em;
   background: #ddd6e8;
   
+  
 }
 .list{
 display: flex;
 flex-direction: column;
 align-items: center;
 color: black;
-}
+flex-wrap: wrap;}
 .icon{
   width: 25px;
 
@@ -73,4 +74,10 @@ button{
   border: none;
   border-radius: 12px;
   margin-top: 10px;
+}
+
+@media all and (max-width: 500px){
+  .photo{
+    width: 100%;
+  }
 }
